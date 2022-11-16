@@ -60,15 +60,15 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Create account");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         AccountWithProfileListResponse accountWithProfileListResponse = JsonUtil.fromJson(response.body(), AccountWithProfileListResponse.class);
-        SimpleAssert.assertNotNull(accountWithProfileListResponse.getData(), "Create account");
-        SimpleAssert.assertEquals(4, accountWithProfileListResponse.getData().size(), "Create account");
-        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"), "Create account");
-        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"), "Create account");
-        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("DaQ"), "Create account");
-        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("UyCHA"), "Create account");
+        SimpleAssert.assertNotNull(accountWithProfileListResponse.getData());
+        SimpleAssert.assertEquals(4, accountWithProfileListResponse.getData().size());
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("DaQ"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("UyCHA"));
     }
 
     @Test(order = 1)
@@ -82,10 +82,10 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Login admin");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         StringResponse stringResponse = JsonUtil.fromJson(response.body(), StringResponse.class);
-        SimpleAssert.assertNotNull(stringResponse.getData(), "Login admin");
+        SimpleAssert.assertNotNull(stringResponse.getData());
         adminToken = stringResponse.getData();
     }
 
@@ -100,10 +100,10 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Login staff");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         StringResponse stringResponse = JsonUtil.fromJson(response.body(), StringResponse.class);
-        SimpleAssert.assertNotNull(stringResponse.getData(), "Login staff");
+        SimpleAssert.assertNotNull(stringResponse.getData());
         staffToken = stringResponse.getData();
     }
 
@@ -118,10 +118,10 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Login teacher");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         StringResponse stringResponse = JsonUtil.fromJson(response.body(), StringResponse.class);
-        SimpleAssert.assertNotNull(stringResponse.getData(), "Login teacher");
+        SimpleAssert.assertNotNull(stringResponse.getData());
         teacherToken = stringResponse.getData();
     }
 
@@ -136,10 +136,10 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Login student");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         StringResponse stringResponse = JsonUtil.fromJson(response.body(), StringResponse.class);
-        SimpleAssert.assertNotNull(stringResponse.getData(), "Login student");
+        SimpleAssert.assertNotNull(stringResponse.getData());
         studentToken = stringResponse.getData();
     }
 
@@ -154,7 +154,7 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 401, "Login invalid");
+        SimpleAssert.assertTrue(response.statusCode() == 401);
     }
 
     @Test(order = 2)
@@ -192,15 +192,15 @@ public class AccountScenario extends AnnotatedScenario {
         HttpResponse<String> teacherResponse = httpClient.send(teacherRequest, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> studentResponse = httpClient.send(studentRequest, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertEquals(200, adminResponse.statusCode(), "Authorize check");
-        SimpleAssert.assertEquals(401, staffResponse.statusCode(), "Authorize check");
-        SimpleAssert.assertEquals(401, teacherResponse.statusCode(), "Authorize check");
-        SimpleAssert.assertEquals(401, studentResponse.statusCode(), "Authorize check");
+        SimpleAssert.assertEquals(200, adminResponse.statusCode());
+        SimpleAssert.assertEquals(401, staffResponse.statusCode());
+        SimpleAssert.assertEquals(401, teacherResponse.statusCode());
+        SimpleAssert.assertEquals(401, studentResponse.statusCode());
 
-        SimpleAssert.assertEquals("Hello Admin", adminResponse.body(), "Authorize check");
-        SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(staffResponse.body(), Response.class).getStatus(), "Authorize check");
-        SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(teacherResponse.body(), Response.class).getStatus(), "Authorize check");
-        SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(studentResponse.body(), Response.class).getStatus(), "Authorize check");
+        SimpleAssert.assertEquals("Hello Admin", adminResponse.body());
+        SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(staffResponse.body(), Response.class).getStatus());
+        SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(teacherResponse.body(), Response.class).getStatus());
+        SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(studentResponse.body(), Response.class).getStatus());
     }
 
     @Test(order = 3)
@@ -214,11 +214,11 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Get own account");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         AccountWithProfileResponse accountWithProfileResponse = JsonUtil.fromJson(response.body(), AccountWithProfileResponse.class);
-        SimpleAssert.assertNotNull(accountWithProfileResponse.getData(), "Get own account");
-        SimpleAssert.assertEquals("TienH", accountWithProfileResponse.getData().getAccount().getUsername(), "Get own account");
+        SimpleAssert.assertNotNull(accountWithProfileResponse.getData());
+        SimpleAssert.assertEquals("TienH", accountWithProfileResponse.getData().getAccount().getUsername());
 
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account"))
@@ -229,11 +229,11 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response2.statusCode() == 200, "Get own account");
+        SimpleAssert.assertTrue(response2.statusCode() == 200);
 
         AccountWithProfileResponse accountWithProfileResponse2 = JsonUtil.fromJson(response2.body(), AccountWithProfileResponse.class);
-        SimpleAssert.assertNotNull(accountWithProfileResponse2.getData(), "Get own account");
-        SimpleAssert.assertEquals("TuL", accountWithProfileResponse2.getData().getAccount().getUsername(), "Get own account");
+        SimpleAssert.assertNotNull(accountWithProfileResponse2.getData());
+        SimpleAssert.assertEquals("TuL", accountWithProfileResponse2.getData().getAccount().getUsername());
     }
 
     @Test(order = 4)
@@ -247,11 +247,11 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response.statusCode() == 200, "Get account");
+        SimpleAssert.assertTrue(response.statusCode() == 200);
 
         AccountWithProfileResponse accountWithProfileResponse = JsonUtil.fromJson(response.body(), AccountWithProfileResponse.class);
-        SimpleAssert.assertNotNull(accountWithProfileResponse.getData(), "Get account");
-        SimpleAssert.assertEquals("TienH", accountWithProfileResponse.getData().getAccount().getUsername(), "Get account");
+        SimpleAssert.assertNotNull(accountWithProfileResponse.getData());
+        SimpleAssert.assertEquals("TienH", accountWithProfileResponse.getData().getAccount().getUsername());
 
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/2"))
@@ -262,11 +262,11 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response2.statusCode() == 200, "Get account");
+        SimpleAssert.assertTrue(response2.statusCode() == 200);
 
         AccountWithProfileResponse accountWithProfileResponse2 = JsonUtil.fromJson(response2.body(), AccountWithProfileResponse.class);
-        SimpleAssert.assertNotNull(accountWithProfileResponse2.getData(), "Get account");
-        SimpleAssert.assertEquals("TuL", accountWithProfileResponse2.getData().getAccount().getUsername(), "Get account");
+        SimpleAssert.assertNotNull(accountWithProfileResponse2.getData());
+        SimpleAssert.assertEquals("TuL", accountWithProfileResponse2.getData().getAccount().getUsername());
 
         HttpRequest request3 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/100"))
@@ -277,10 +277,29 @@ public class AccountScenario extends AnnotatedScenario {
 
         HttpResponse<String> response3 = httpClient.send(request3, HttpResponse.BodyHandlers.ofString());
 
-        SimpleAssert.assertTrue(response3.statusCode() == 404, "Get account");
+        SimpleAssert.assertTrue(response3.statusCode() == 404);
 
         AccountWithProfileResponse accountWithProfileResponse3 = JsonUtil.fromJson(response3.body(), AccountWithProfileResponse.class);
-        SimpleAssert.assertEquals(1, accountWithProfileResponse3.getStatus(), "Get account");
-        SimpleAssert.assertNull(accountWithProfileResponse3.getData(), "Get account");
+        SimpleAssert.assertEquals(1, accountWithProfileResponse3.getStatus());
+        SimpleAssert.assertNull(accountWithProfileResponse3.getData());
+    }
+
+    @Test(order = 5)
+    private void getAllAccount() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertTrue(response.statusCode() == 200);
+
+        AccountWithProfileListResponse accountWithProfileListResponse = JsonUtil.fromJson(response.body(), AccountWithProfileListResponse.class);
+        SimpleAssert.assertNotNull(accountWithProfileListResponse.getData());
+        SimpleAssert.assertEquals(4, accountWithProfileListResponse.getData().size());
+
     }
 }
