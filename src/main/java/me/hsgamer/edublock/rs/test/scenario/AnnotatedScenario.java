@@ -29,9 +29,9 @@ public class AnnotatedScenario extends AbstractScenario {
         for (Method method : testMethods) {
             Test test = method.getAnnotation(Test.class);
             if (test.name().isEmpty()) {
-                Logger.info("Running {} # {}", getClass().getSimpleName(), method.getName());
+                Logger.info("[TEST] {} # {}", getClass().getSimpleName(), method.getName());
             } else {
-                Logger.info("Running {} # {}", getClass().getSimpleName(), test.name());
+                Logger.info("[TEST] {} # {}", getClass().getSimpleName(), test.name());
             }
             if (method.trySetAccessible()) {
                 try {

@@ -42,6 +42,7 @@ public class Main {
 
     public static void runScenario(AbstractScenario scenario) {
         try {
+            Logger.info("[RUNNING] " + scenario.getClass().getSimpleName());
             scenario.before();
             scenario.run();
             scenario.after();
