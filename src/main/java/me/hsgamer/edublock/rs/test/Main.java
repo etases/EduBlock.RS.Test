@@ -2,6 +2,7 @@ package me.hsgamer.edublock.rs.test;
 
 import me.hsgamer.edublock.rs.test.scenario.AbstractScenario;
 import me.hsgamer.edublock.rs.test.scenario.AccountScenario;
+import me.hsgamer.edublock.rs.test.scenario.ClassroomScenario;
 import org.tinylog.Logger;
 
 import java.net.http.HttpClient;
@@ -13,7 +14,8 @@ import java.util.function.BiFunction;
 public class Main {
     private static final Map<Class<?>, AbstractScenario> scenarioMap = new HashMap<>();
     private static final List<BiFunction<UrlSupplier, HttpClient, AbstractScenario>> scenarioFunctionList = List.of(
-            AccountScenario::new
+            AccountScenario::new,
+            ClassroomScenario::new
     );
 
     public static void main(String[] args) {
