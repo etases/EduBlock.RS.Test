@@ -34,7 +34,14 @@ public class AnnotatedScenario extends AbstractScenario {
                 Logger.info("Running {} # {}", getClass().getSimpleName(), test.name());
             }
             if (method.trySetAccessible()) {
-                method.invoke(this);
+                try {
+                    method.invoke(this);
+                } catch (Exception e) {
+                    if (e.getCause() instanceof ScenarioException scenarioException) {
+                        throw scenarioException;
+                    }
+                    throw e;
+                }
             } else {
                 throw new ScenarioException("Cannot access method " + method.getName());
             }

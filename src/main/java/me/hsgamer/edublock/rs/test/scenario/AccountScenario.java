@@ -4,19 +4,17 @@ import me.hsgamer.edublock.rs.test.JsonUtil;
 import me.hsgamer.edublock.rs.test.SimpleAssert;
 import me.hsgamer.edublock.rs.test.UrlSupplier;
 import me.hsgamer.edublock.rs.test.annotation.Test;
-import me.hsgamer.edublock.rs.test.model.input.AccountCreate;
-import me.hsgamer.edublock.rs.test.model.input.AccountCreateListInput;
-import me.hsgamer.edublock.rs.test.model.input.AccountLogin;
-import me.hsgamer.edublock.rs.test.model.output.AccountWithProfileListResponse;
-import me.hsgamer.edublock.rs.test.model.output.AccountWithProfileResponse;
-import me.hsgamer.edublock.rs.test.model.output.Response;
-import me.hsgamer.edublock.rs.test.model.output.StringResponse;
+import me.hsgamer.edublock.rs.test.model.input.*;
+import me.hsgamer.edublock.rs.test.model.output.*;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class AccountScenario extends AnnotatedScenario {
     String adminToken;
@@ -31,22 +29,22 @@ public class AccountScenario extends AnnotatedScenario {
     @Test
     private void createAccount() throws IOException, InterruptedException {
         AccountCreateListInput accountCreateListInput = new AccountCreateListInput(List.of(
-                new AccountCreate(
+                new AccountCreate( // ID: 1
                         "Tien",
                         "Huynh",
                         "Admin"
                 ),
-                new AccountCreate(
+                new AccountCreate( // ID: 2
                         "Tu",
                         "Le",
                         "Staff"
                 ),
-                new AccountCreate(
+                new AccountCreate( // ID: 3
                         "Da",
                         "Quach",
                         "Teacher"
                 ),
-                new AccountCreate(
+                new AccountCreate( // ID: 4
                         "Uy",
                         "Cao Hoang Anh",
                         "Student"
@@ -300,6 +298,275 @@ public class AccountScenario extends AnnotatedScenario {
         AccountWithProfileListResponse accountWithProfileListResponse = JsonUtil.fromJson(response.body(), AccountWithProfileListResponse.class);
         SimpleAssert.assertNotNull(accountWithProfileListResponse.getData());
         SimpleAssert.assertEquals(4, accountWithProfileListResponse.getData().size());
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("DaQ"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("UyCHA"));
+    }
 
+    @Test(order = 5)
+    private void getPagedAllAccount() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/list", Map.of("pageNumber", "1", "pageSize", "2")))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertTrue(response.statusCode() == 200);
+
+        AccountWithProfileListResponse accountWithProfileListResponse = JsonUtil.fromJson(response.body(), AccountWithProfileListResponse.class);
+        SimpleAssert.assertNotNull(accountWithProfileListResponse.getData());
+        SimpleAssert.assertEquals(2, accountWithProfileListResponse.getData().size());
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
+
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/list", Map.of("pageNumber", "2", "pageSize", "2")))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertTrue(response2.statusCode() == 200);
+
+        AccountWithProfileListResponse accountWithProfileListResponse2 = JsonUtil.fromJson(response2.body(), AccountWithProfileListResponse.class);
+        SimpleAssert.assertNotNull(accountWithProfileListResponse2.getData());
+        SimpleAssert.assertEquals(2, accountWithProfileListResponse2.getData().size());
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse2.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("DaQ"));
+        SimpleAssert.assertAnyMatch(accountWithProfileListResponse2.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("UyCHA"));
+    }
+
+    @Test(order = 6)
+    private void getAccountByRole() throws IOException, InterruptedException {
+        HttpRequest adminRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/role/admin/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+        HttpRequest teacherRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/role/teacher/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+        HttpRequest studentRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/role/student/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+        HttpRequest staffRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/role/staff/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> adminResponse = httpClient.send(adminRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> teacherResponse = httpClient.send(teacherRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> studentResponse = httpClient.send(studentRequest, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> staffResponse = httpClient.send(staffRequest, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertTrue(adminResponse.statusCode() == 200);
+        SimpleAssert.assertTrue(teacherResponse.statusCode() == 200);
+        SimpleAssert.assertTrue(studentResponse.statusCode() == 200);
+        SimpleAssert.assertTrue(staffResponse.statusCode() == 200);
+
+        AccountWithProfileListResponse adminResponseData = JsonUtil.fromJson(adminResponse.body(), AccountWithProfileListResponse.class);
+        AccountWithProfileListResponse teacherResponseData = JsonUtil.fromJson(teacherResponse.body(), AccountWithProfileListResponse.class);
+        AccountWithStudentProfileListResponse studentResponseData = JsonUtil.fromJson(studentResponse.body(), AccountWithStudentProfileListResponse.class);
+        AccountWithProfileListResponse staffResponseData = JsonUtil.fromJson(staffResponse.body(), AccountWithProfileListResponse.class);
+
+        SimpleAssert.assertNotNull(adminResponseData.getData());
+        SimpleAssert.assertNotNull(teacherResponseData.getData());
+        SimpleAssert.assertNotNull(studentResponseData.getData());
+        SimpleAssert.assertNotNull(staffResponseData.getData());
+
+        SimpleAssert.assertEquals(1, adminResponseData.getData().size());
+        SimpleAssert.assertEquals(1, teacherResponseData.getData().size());
+        SimpleAssert.assertEquals(1, studentResponseData.getData().size());
+        SimpleAssert.assertEquals(1, staffResponseData.getData().size());
+
+        SimpleAssert.assertAnyMatch(adminResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"));
+        SimpleAssert.assertAnyMatch(staffResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
+        SimpleAssert.assertAnyMatch(teacherResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("DaQ"));
+        SimpleAssert.assertAnyMatch(studentResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("UyCHA"));
+    }
+
+    @Test(order = 7)
+    private void changePassword() throws IOException, InterruptedException {
+        AccountLogin accountLogin = new AccountLogin("TienH", "123456");
+        AccountLoginListInput accountLoginListInput = new AccountLoginListInput(List.of(accountLogin));
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/list/password"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .PUT(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(accountLoginListInput)))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        HttpRequest loginRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/login"))
+                .headers("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(accountLogin)))
+                .build();
+
+        HttpResponse<String> loginResponse = httpClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertEquals(200, loginResponse.statusCode());
+        StringResponse stringResponse = JsonUtil.fromJson(loginResponse.body(), StringResponse.class);
+        SimpleAssert.assertNotNull(stringResponse.getData());
+        adminToken = stringResponse.getData();
+    }
+
+    @Test(order = 8)
+    private void changeSelfProfile() throws IOException, InterruptedException {
+        ProfileUpdate profileUpdate = new ProfileUpdate(
+                "Tien",
+                "Huynh",
+                true,
+                "",
+                Date.from(Instant.EPOCH),
+                "Ha Noi",
+                "0123456789",
+                "test@test.com"
+        );
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/self/profile"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .PUT(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(profileUpdate)))
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        HttpRequest getProfileRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + adminToken)
+                .GET()
+                .build();
+
+        var getProfileResponse = httpClient.send(getProfileRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, getProfileResponse.statusCode());
+        AccountWithProfileResponse accountWithProfileResponse = JsonUtil.fromJson(getProfileResponse.body(), AccountWithProfileResponse.class);
+        SimpleAssert.assertNotNull(accountWithProfileResponse.getData());
+        SimpleAssert.assertEquals("Tien", accountWithProfileResponse.getData().getProfile().getFirstName());
+        SimpleAssert.assertEquals("Huynh", accountWithProfileResponse.getData().getProfile().getLastName());
+        SimpleAssert.assertEquals(true, accountWithProfileResponse.getData().getProfile().isMale());
+        SimpleAssert.assertEquals("", accountWithProfileResponse.getData().getProfile().getAvatar());
+        SimpleAssert.assertEquals(Date.from(Instant.EPOCH), accountWithProfileResponse.getData().getProfile().getBirthDate());
+        SimpleAssert.assertEquals("Ha Noi", accountWithProfileResponse.getData().getProfile().getAddress());
+        SimpleAssert.assertEquals("0123456789", accountWithProfileResponse.getData().getProfile().getPhone());
+        SimpleAssert.assertEquals("test@test.com", accountWithProfileResponse.getData().getProfile().getEmail());
+    }
+
+    @Test(order = 9)
+    private void changeProfile() throws IOException, InterruptedException {
+        ProfileUpdate profileUpdate = new ProfileUpdate(
+                "Da",
+                "Quach",
+                true,
+                "",
+                Date.from(Instant.EPOCH),
+                "Ha Noi",
+                "0123456789",
+                "daql@test.com"
+        );
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/3/profile"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .PUT(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(profileUpdate)))
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        HttpRequest getProfileRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/3"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .GET()
+                .build();
+
+        var getProfileResponse = httpClient.send(getProfileRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, getProfileResponse.statusCode());
+
+        AccountWithProfileResponse accountWithProfileResponse = JsonUtil.fromJson(getProfileResponse.body(), AccountWithProfileResponse.class);
+        SimpleAssert.assertNotNull(accountWithProfileResponse.getData());
+        SimpleAssert.assertEquals("Da", accountWithProfileResponse.getData().getProfile().getFirstName());
+        SimpleAssert.assertEquals("Quach", accountWithProfileResponse.getData().getProfile().getLastName());
+        SimpleAssert.assertEquals(true, accountWithProfileResponse.getData().getProfile().isMale());
+        SimpleAssert.assertEquals("", accountWithProfileResponse.getData().getProfile().getAvatar());
+        SimpleAssert.assertEquals(Date.from(Instant.EPOCH), accountWithProfileResponse.getData().getProfile().getBirthDate());
+        SimpleAssert.assertEquals("Ha Noi", accountWithProfileResponse.getData().getProfile().getAddress());
+        SimpleAssert.assertEquals("0123456789", accountWithProfileResponse.getData().getProfile().getPhone());
+        SimpleAssert.assertEquals("daql@test.com", accountWithProfileResponse.getData().getProfile().getEmail());
+    }
+
+    @Test(order = 10)
+    private void updateStudentProfile() throws IOException, InterruptedException {
+        StudentUpdate studentUpdate = new StudentUpdate(
+                "Kinh",
+                "Nguyen Van A",
+                "Giang vien",
+                "Tran Thi B",
+                "Mua ban",
+                "Trang Thi C",
+                "Ki su",
+                "Can Tho"
+        );
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/4/student"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .PUT(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(studentUpdate)))
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        HttpRequest getProfileRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/4"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .GET()
+                .build();
+
+        var getProfileResponse = httpClient.send(getProfileRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, getProfileResponse.statusCode());
+
+        AccountWithStudentProfileResponse accountWithStudentProfileResponse = JsonUtil.fromJson(getProfileResponse.body(), AccountWithStudentProfileResponse.class);
+        SimpleAssert.assertNotNull(accountWithStudentProfileResponse.getData());
+        SimpleAssert.assertNotNull(accountWithStudentProfileResponse.getData().getStudent());
+        SimpleAssert.assertEquals("Kinh", accountWithStudentProfileResponse.getData().getStudent().getEthnic());
+        SimpleAssert.assertEquals("Nguyen Van A", accountWithStudentProfileResponse.getData().getStudent().getFatherName());
+        SimpleAssert.assertEquals("Giang vien", accountWithStudentProfileResponse.getData().getStudent().getFatherJob());
+        SimpleAssert.assertEquals("Tran Thi B", accountWithStudentProfileResponse.getData().getStudent().getMotherName());
+        SimpleAssert.assertEquals("Mua ban", accountWithStudentProfileResponse.getData().getStudent().getMotherJob());
+        SimpleAssert.assertEquals("Trang Thi C", accountWithStudentProfileResponse.getData().getStudent().getGuardianName());
+        SimpleAssert.assertEquals("Ki su", accountWithStudentProfileResponse.getData().getStudent().getGuardianJob());
+        SimpleAssert.assertEquals("Can Tho", accountWithStudentProfileResponse.getData().getStudent().getHomeTown());
+
+        HttpRequest invalidRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/3/student"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .PUT(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(studentUpdate)))
+                .build();
+
+        var invalidResponse = httpClient.send(invalidRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(404, invalidResponse.statusCode());
     }
 }
