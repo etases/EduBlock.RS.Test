@@ -1,0 +1,43 @@
+package me.hsgamer.edublock.rs.test.scenario;
+
+import me.hsgamer.edublock.rs.test.ScenarioException;
+import me.hsgamer.edublock.rs.test.UrlSupplier;
+import me.hsgamer.edublock.rs.test.annotation.Test;
+import org.tinylog.Logger;
+
+import java.lang.reflect.Method;
+import java.net.http.HttpClient;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class AnnotatedScenario extends AbstractScenario {
+    public AnnotatedScenario(UrlSupplier urlSupplier, HttpClient httpClient) {
+        super(urlSupplier, httpClient);
+    }
+
+    @Override
+    public void run() throws Exception {
+        Method[] methods = getClass().getDeclaredMethods();
+        List<Method> testMethods = Stream.of(methods)
+                .filter(method -> method.isAnnotationPresent(Test.class))
+                .sorted((method1, method2) -> {
+                    Test test1 = method1.getAnnotation(Test.class);
+                    Test test2 = method2.getAnnotation(Test.class);
+                    return Integer.compare(test1.order(), test2.order());
+                })
+                .toList();
+        for (Method method : testMethods) {
+            Test test = method.getAnnotation(Test.class);
+            if (test.name().isEmpty()) {
+                Logger.info("Running {} # {}", getClass().getSimpleName(), method.getName());
+            } else {
+                Logger.info("Running {} # {}", getClass().getSimpleName(), test.name());
+            }
+            if (method.trySetAccessible()) {
+                method.invoke(this);
+            } else {
+                throw new ScenarioException("Cannot access method " + method.getName());
+            }
+        }
+    }
+}
