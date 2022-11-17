@@ -34,6 +34,10 @@ public class Main {
                 .toList();
         scenarioList.forEach(scenario -> scenarioMap.put(scenario.getClass(), scenario));
         scenarioList.forEach(Main::runScenario);
+
+        Logger.info("Scenario: {}", Counter.getScenarioCounter());
+        Logger.info("Test: {}", Counter.getTestCounter());
+        Logger.info("Assert: {}", Counter.getAssertCounter());
     }
 
     public static <T extends AbstractScenario> T getScenario(Class<T> clazz) {
@@ -45,6 +49,7 @@ public class Main {
     }
 
     public static void runScenario(AbstractScenario scenario) {
+        Counter.incrementScenarioCounter();
         try {
             Logger.info("[RUNNING] " + scenario.getClass().getSimpleName());
             scenario.before();

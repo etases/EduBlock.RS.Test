@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 @UtilityClass
 public class SimpleAssert {
     public static void assertTrue(boolean condition, String failMessage, Object... args) {
+        Counter.incrementAssertCounter();
         if (!condition) {
             throw new ScenarioException(String.format(failMessage, args));
         }
@@ -58,27 +59,35 @@ public class SimpleAssert {
     }
 
     public static <T> void assertAnyMatch(Iterable<T> iterable, Predicate<T> predicate) {
+        boolean found = false;
         for (T t : iterable) {
             if (predicate.test(t)) {
-                return;
+                found = true;
+                break;
             }
         }
-        throw new ScenarioException("No element matches the predicate");
+        assertTrue(found, "Expected any match but got none");
     }
 
     public static <T> void assertAllMatch(Iterable<T> iterable, Predicate<T> predicate) {
+        boolean found = true;
         for (T t : iterable) {
             if (!predicate.test(t)) {
-                throw new ScenarioException("An element does not match the predicate");
+                found = false;
+                break;
             }
         }
+        assertTrue(found, "Expected all match but got none");
     }
 
     public static <T> void assertNoneMatch(Iterable<T> iterable, Predicate<T> predicate) {
+        boolean found = false;
         for (T t : iterable) {
             if (predicate.test(t)) {
-                throw new ScenarioException("An element matches the predicate");
+                found = true;
+                break;
             }
         }
+        assertFalse(found, "Expected none match but got some");
     }
 }

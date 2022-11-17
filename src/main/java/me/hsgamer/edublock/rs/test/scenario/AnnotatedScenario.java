@@ -1,5 +1,6 @@
 package me.hsgamer.edublock.rs.test.scenario;
 
+import me.hsgamer.edublock.rs.test.Counter;
 import me.hsgamer.edublock.rs.test.ScenarioException;
 import me.hsgamer.edublock.rs.test.UrlSupplier;
 import me.hsgamer.edublock.rs.test.annotation.Test;
@@ -33,6 +34,7 @@ public class AnnotatedScenario extends AbstractScenario {
             } else {
                 Logger.info("[TEST] {} # {}", getClass().getSimpleName(), test.name());
             }
+            Counter.incrementTestCounter();
             if (method.trySetAccessible()) {
                 try {
                     method.invoke(this);
