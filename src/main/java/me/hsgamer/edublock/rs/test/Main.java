@@ -1,9 +1,6 @@
 package me.hsgamer.edublock.rs.test;
 
-import me.hsgamer.edublock.rs.test.scenario.AbstractScenario;
-import me.hsgamer.edublock.rs.test.scenario.AccountScenario;
-import me.hsgamer.edublock.rs.test.scenario.ClassroomScenario;
-import me.hsgamer.edublock.rs.test.scenario.RecordScenario;
+import me.hsgamer.edublock.rs.test.scenario.*;
 import org.tinylog.Logger;
 
 import java.net.http.HttpClient;
@@ -17,7 +14,9 @@ public class Main {
     private static final List<BiFunction<UrlSupplier, HttpClient, AbstractScenario>> scenarioFunctionList = List.of(
             AccountScenario::new,
             ClassroomScenario::new,
-            RecordScenario::new
+            RecordScenario::new,
+            SubjectScenario::new,
+            ClassificationScenario::new
     );
 
     public static void main(String[] args) {
