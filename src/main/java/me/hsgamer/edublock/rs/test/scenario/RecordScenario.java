@@ -9,6 +9,7 @@ import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryInput;
 import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryVerify;
 import me.hsgamer.edublock.rs.test.model.output.PendingRecordEntryListResponse;
 import me.hsgamer.edublock.rs.test.model.output.RecordResponse;
+import me.hsgamer.edublock.rs.test.model.output.RecordWithStudentListResponse;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
@@ -214,6 +215,46 @@ public class RecordScenario extends AnnotatedScenario {
                         && recordEntry.getFirstHalfScore() == 10
                         && recordEntry.getSecondHalfScore() == 10
                         && recordEntry.getFinalScore() == 10
+        );
+    }
+
+    @Test(order = 3)
+    private void getRecordListByClassroomId() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/record/list/classroom/1"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .GET()
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        RecordWithStudentListResponse recordListResponse = JsonUtil.fromJson(response.body(), RecordWithStudentListResponse.class);
+        SimpleAssert.assertNotNull(recordListResponse.getData());
+        SimpleAssert.assertEquals(1, recordListResponse.getData().size());
+        SimpleAssert.assertAnyMatch(recordListResponse.getData(), record ->
+                record.getStudent().getAccount().getId() == 4 && record.getEntries().size() == 1
+        );
+    }
+
+    @Test(order = 3)
+    private void getRecordListByGradeAndYear() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/record/list/grade/10/2021"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .GET()
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        RecordWithStudentListResponse recordListResponse = JsonUtil.fromJson(response.body(), RecordWithStudentListResponse.class);
+        SimpleAssert.assertNotNull(recordListResponse.getData());
+        SimpleAssert.assertEquals(1, recordListResponse.getData().size());
+        SimpleAssert.assertAnyMatch(recordListResponse.getData(), record ->
+                record.getStudent().getAccount().getId() == 4 && record.getEntries().size() == 1
         );
     }
 }
