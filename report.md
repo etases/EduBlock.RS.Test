@@ -12,7 +12,7 @@
 
   Expected: `not null`
 
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
 
 - **assertFalse**
 
@@ -140,6 +140,8 @@
 
 ## authorizeCheck
 
+### Admin
+
 - **assertEquals**
 
   Expected: `200`
@@ -148,39 +150,45 @@
 
 - **assertEquals**
 
-  Expected: `401`
-
-  Actual: `401`
-
-- **assertEquals**
-
-  Expected: `401`
-
-  Actual: `401`
-
-- **assertEquals**
-
-  Expected: `401`
-
-  Actual: `401`
-
-- **assertEquals**
-
   Expected: `Hello Admin`
 
   Actual: `Hello Admin`
 
+### Staff
+
+- **assertEquals**
+
+  Expected: `401`
+
+  Actual: `401`
+
 - **assertEquals**
 
   Expected: `-1990`
 
   Actual: `-1990`
 
+### Teacher
+
+- **assertEquals**
+
+  Expected: `401`
+
+  Actual: `401`
+
 - **assertEquals**
 
   Expected: `-1990`
 
   Actual: `-1990`
+
+### Student
+
+- **assertEquals**
+
+  Expected: `401`
+
+  Actual: `401`
 
 - **assertEquals**
 
@@ -189,6 +197,8 @@
   Actual: `-1990`
 
 ## getOwnAccount
+
+### Admin
 
 - **assertTrue**
 
@@ -200,7 +210,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
+  Actual: `AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
 
 - **assertFalse**
 
@@ -214,6 +224,8 @@
 
   Actual: `TienH`
 
+### Staff
+
 - **assertTrue**
 
   Expected: `true`
@@ -224,7 +236,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
+  Actual: `AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
 
 - **assertFalse**
 
@@ -240,6 +252,8 @@
 
 ## getAccount
 
+### Admin
+
 - **assertTrue**
 
   Expected: `true`
@@ -250,7 +264,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
+  Actual: `AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
 
 - **assertFalse**
 
@@ -264,6 +278,8 @@
 
   Actual: `TienH`
 
+### Staff
+
 - **assertTrue**
 
   Expected: `true`
@@ -274,7 +290,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
+  Actual: `AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
 
 - **assertFalse**
 
@@ -287,6 +303,8 @@
   Expected: `TuL`
 
   Actual: `TuL`
+
+### Teacher
 
 - **assertTrue**
 
@@ -318,7 +336,7 @@
 
   Expected: `not null`
 
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
 
 - **assertFalse**
 
@@ -358,6 +376,8 @@
 
 ## getPagedAllAccount
 
+### Page 1
+
 - **assertTrue**
 
   Expected: `true`
@@ -368,7 +388,7 @@
 
   Expected: `not null`
 
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
 
 - **assertFalse**
 
@@ -394,6 +414,8 @@
 
   Actual: `true`
 
+### Page 2
+
 - **assertTrue**
 
   Expected: `true`
@@ -404,7 +426,7 @@
 
   Expected: `not null`
 
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
 
 - **assertFalse**
 
@@ -432,23 +454,7 @@
 
 ## getAccountByRole
 
-- **assertTrue**
-
-  Expected: `true`
-
-  Actual: `true`
-
-- **assertTrue**
-
-  Expected: `true`
-
-  Actual: `true`
-
-- **assertTrue**
-
-  Expected: `true`
-
-  Actual: `true`
+### Admin
 
 - **assertTrue**
 
@@ -460,67 +466,13 @@
 
   Expected: `not null`
 
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
 
 - **assertFalse**
 
   Expected: `false`
 
   Actual: `false`
-
-- **assertNotNull**
-
-  Expected: `not null`
-
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
-
-- **assertFalse**
-
-  Expected: `false`
-
-  Actual: `false`
-
-- **assertNotNull**
-
-  Expected: `not null`
-
-  Actual: `[AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=, fatherName=, fatherJob=, motherName=, motherJob=, guardianName=, guardianJob=, homeTown=), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
-
-- **assertFalse**
-
-  Expected: `false`
-
-  Actual: `false`
-
-- **assertNotNull**
-
-  Expected: `not null`
-
-  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
-
-- **assertFalse**
-
-  Expected: `false`
-
-  Actual: `false`
-
-- **assertEquals**
-
-  Expected: `1`
-
-  Actual: `1`
-
-- **assertEquals**
-
-  Expected: `1`
-
-  Actual: `1`
-
-- **assertEquals**
-
-  Expected: `1`
-
-  Actual: `1`
 
 - **assertEquals**
 
@@ -534,17 +486,95 @@
 
   Actual: `true`
 
+### Teacher
+
+- **assertTrue**
+
+  Expected: `true`
+
+  Actual: `true`
+
+- **assertNotNull**
+
+  Expected: `not null`
+
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+
+- **assertFalse**
+
+  Expected: `false`
+
+  Actual: `false`
+
+- **assertEquals**
+
+  Expected: `1`
+
+  Actual: `1`
+
 - **assertAnyMatch**
 
   Expected: `true`
 
   Actual: `true`
 
+### Student
+
+- **assertTrue**
+
+  Expected: `true`
+
+  Actual: `true`
+
+- **assertNotNull**
+
+  Expected: `not null`
+
+  Actual: `[AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=, fatherName=, fatherJob=, motherName=, motherJob=, guardianName=, guardianJob=, homeTown=), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+
+- **assertFalse**
+
+  Expected: `false`
+
+  Actual: `false`
+
+- **assertEquals**
+
+  Expected: `1`
+
+  Actual: `1`
+
 - **assertAnyMatch**
 
   Expected: `true`
 
   Actual: `true`
+
+### Staff
+
+- **assertTrue**
+
+  Expected: `true`
+
+  Actual: `true`
+
+- **assertNotNull**
+
+  Expected: `not null`
+
+  Actual: `[AccountWithProfileOutput(account=AccountOutput(id=2, username=TuL, role=STAFF, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=2, firstName=Tu, lastName=Le, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+
+- **assertFalse**
+
+  Expected: `false`
+
+  Actual: `false`
+
+- **assertEquals**
+
+  Expected: `1`
+
+  Actual: `1`
 
 - **assertAnyMatch**
 
@@ -596,7 +626,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=test@test.com))`
+  Actual: `AccountWithProfileOutput(account=AccountOutput(id=1, username=TienH, role=ADMIN, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=1, firstName=Tien, lastName=Huynh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=test@test.com))`
 
 - **assertFalse**
 
@@ -670,7 +700,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))`
+  Actual: `AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))`
 
 - **assertFalse**
 
@@ -728,6 +758,8 @@
 
 ## updateStudentProfile
 
+### Valid
+
 - **assertEquals**
 
   Expected: `200`
@@ -744,7 +776,7 @@
 
   Expected: `not null`
 
-  Actual: `AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
+  Actual: `AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))`
 
 - **assertFalse**
 
@@ -812,6 +844,8 @@
 
   Actual: `Can Tho`
 
+### Invalid
+
 - **assertEquals**
 
   Expected: `404`
@@ -832,7 +866,7 @@
 
   Expected: `not null`
 
-  Actual: `ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))`
+  Actual: `ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))`
 
 - **assertFalse**
 
@@ -898,7 +932,7 @@
 
   Expected: `not null`
 
-  Actual: `[AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
+  Actual: `[AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=))]`
 
 - **assertFalse**
 
@@ -930,7 +964,7 @@
 
   Expected: `not null`
 
-  Actual: `[TeacherWithSubjectOutput(account=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]))]`
+  Actual: `[TeacherWithSubjectOutput(account=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]))]`
 
 - **assertFalse**
 
@@ -990,7 +1024,7 @@
 
   Expected: `not null`
 
-  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
+  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
 
 - **assertFalse**
 
@@ -1022,7 +1056,7 @@
 
   Expected: `not null`
 
-  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
+  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
 
 - **assertFalse**
 
@@ -1054,7 +1088,7 @@
 
   Expected: `not null`
 
-  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
+  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
 
 - **assertFalse**
 
@@ -1086,7 +1120,7 @@
 
   Expected: `not null`
 
-  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
+  Actual: `[ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))]`
 
 - **assertFalse**
 
@@ -1118,7 +1152,7 @@
 
   Expected: `not null`
 
-  Actual: `ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))`
+  Actual: `ClassroomOutput(id=1, name=10A2, grade=10, year=2020, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))`
 
 - **assertFalse**
 
@@ -1150,7 +1184,7 @@
 
   Expected: `not null`
 
-  Actual: `ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))`
+  Actual: `ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))`
 
 - **assertFalse**
 
@@ -1192,11 +1226,15 @@
 
 ## requestChange
 
+### Request 1
+
 - **assertEquals**
 
   Expected: `200`
 
   Actual: `200`
+
+### Request 2
 
 - **assertEquals**
 
@@ -1206,11 +1244,21 @@
 
 ## bulkRequest
 
+### Valid Request
+
 - **assertEquals**
 
   Expected: `200`
 
   Actual: `200`
+
+### Invalid Request
+
+- **assertEquals**
+
+  Expected: `400`
+
+  Actual: `400`
 
 ## getPendingRecordEntries
 
@@ -1224,7 +1272,7 @@
 
   Expected: `not null`
 
-  Actual: `[PendingRecordEntryOutput(id=1, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=5.0, finalScore=5.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=2, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=3, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=1.0, secondHalfScore=2.0, finalScore=3.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=4, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=6.0, finalScore=7.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))))]`
+  Actual: `[PendingRecordEntryOutput(id=1, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=5.0, finalScore=5.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=2, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=3, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=1.0, secondHalfScore=2.0, finalScore=3.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=4, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=6.0, finalScore=7.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))))]`
 
 - **assertFalse**
 
@@ -1274,7 +1322,7 @@
 
   Expected: `not null`
 
-  Actual: `[PendingRecordEntryOutput(id=1, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=5.0, finalScore=5.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=2, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=3, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=1.0, secondHalfScore=2.0, finalScore=3.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=4, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=6.0, finalScore=7.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))))]`
+  Actual: `[PendingRecordEntryOutput(id=1, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=5.0, finalScore=5.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=2, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=3, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=1.0, secondHalfScore=2.0, finalScore=3.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))), PendingRecordEntryOutput(id=4, subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=5.0, secondHalfScore=6.0, finalScore=7.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))))]`
 
 - **assertFalse**
 
@@ -1314,11 +1362,15 @@
 
 ## verifyRequest
 
+### Deny request
+
 - **assertEquals**
 
   Expected: `200`
 
   Actual: `200`
+
+### Accept request
 
 - **assertEquals**
 
@@ -1338,7 +1390,7 @@
 
   Expected: `not null`
 
-  Actual: `[RecordWithStudentOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, approvalDate=Fri Nov 25 14:53:32 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)))]`
+  Actual: `[RecordWithStudentOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, approvalDate=Fri Nov 25 15:22:48 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)))]`
 
 - **assertFalse**
 
@@ -1370,7 +1422,7 @@
 
   Expected: `not null`
 
-  Actual: `RecordOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, approvalDate=Fri Nov 25 14:53:32 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)))`
+  Actual: `RecordOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, approvalDate=Fri Nov 25 15:22:48 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)))`
 
 - **assertFalse**
 
@@ -1402,7 +1454,7 @@
 
   Expected: `not null`
 
-  Actual: `RecordOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, approvalDate=Fri Nov 25 14:53:32 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)))`
+  Actual: `RecordOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, approvalDate=Fri Nov 25 15:22:48 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)))`
 
 - **assertFalse**
 
@@ -1434,7 +1486,7 @@
 
   Expected: `not null`
 
-  Actual: `[RecordWithStudentOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 14:53:32 ICT 2022, approvalDate=Fri Nov 25 14:53:32 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 14:53:31 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 14:53:31 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)))]`
+  Actual: `[RecordWithStudentOutput(classroom=ClassroomOutput(id=1, name=10A1, grade=10, year=2021, homeroomTeacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com))), entries=[RecordEntryOutput(subjectId=1, subject=SubjectOutput(id=1, identifier=MATH, name=Toán, otherNames=[Mathematics, Math]), firstHalfScore=10.0, secondHalfScore=10.0, finalScore=10.0, requestDate=Fri Nov 25 15:22:48 ICT 2022, approvalDate=Fri Nov 25 15:22:48 ICT 2022, updateComplete=false, fromFabric=false, teacher=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)), requester=AccountWithProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)), approver=AccountWithProfileOutput(account=AccountOutput(id=3, username=DaQ, role=TEACHER, createdAt=Fri Nov 25 15:22:47 ICT 2022), profile=ProfileOutput(id=3, firstName=Da, lastName=Quach, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=Ha Noi, phone=0123456789, email=daql@test.com)))], classification=ClassificationReportOutput(firstHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), secondHalfClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647), finalClassify=ClassificationOutput(identifier=, name=, otherNames=[], level=2147483647)), student=AccountWithStudentProfileOutput(account=AccountOutput(id=4, username=UyCHA, role=STUDENT, createdAt=Fri Nov 25 15:22:47 ICT 2022), student=StudentOutput(id=4, ethnic=Kinh, fatherName=Nguyen Van A, fatherJob=Giang vien, motherName=Tran Thi B, motherJob=Mua ban, guardianName=Trang Thi C, guardianJob=Ki su, homeTown=Can Tho), profile=ProfileOutput(id=4, firstName=Uy, lastName=Cao Hoang Anh, male=true, avatar=, birthDate=Thu Jan 01 08:00:00 ICT 1970, address=, phone=, email=)))]`
 
 - **assertFalse**
 
@@ -1490,6 +1542,8 @@
 
 ## getSubjectById
 
+### Found
+
 - **assertEquals**
 
   Expected: `200`
@@ -1514,6 +1568,8 @@
 
   Actual: `1`
 
+### Not Found
+
 - **assertEquals**
 
   Expected: `404`
@@ -1521,38 +1577,6 @@
   Actual: `404`
 
 # ClassificationScenario
-
-## getClassificationById
-
-- **assertEquals**
-
-  Expected: `200`
-
-  Actual: `200`
-
-- **assertNotNull**
-
-  Expected: `not null`
-
-  Actual: `ClassificationOutput(identifier=GOOD, name=Khá, otherNames=[Good], level=2)`
-
-- **assertFalse**
-
-  Expected: `false`
-
-  Actual: `false`
-
-- **assertEquals**
-
-  Expected: `GOOD`
-
-  Actual: `GOOD`
-
-- **assertEquals**
-
-  Expected: `404`
-
-  Actual: `404`
 
 ## getClassificationList
 
@@ -1586,11 +1610,47 @@
 
   Actual: `false`
 
+## getClassificationById
+
+### Found
+
+- **assertEquals**
+
+  Expected: `200`
+
+  Actual: `200`
+
+- **assertNotNull**
+
+  Expected: `not null`
+
+  Actual: `ClassificationOutput(identifier=GOOD, name=Khá, otherNames=[Good], level=2)`
+
+- **assertFalse**
+
+  Expected: `false`
+
+  Actual: `false`
+
+- **assertEquals**
+
+  Expected: `GOOD`
+
+  Actual: `GOOD`
+
+### Not Found
+
+- **assertEquals**
+
+  Expected: `404`
+
+  Actual: `404`
+
 # Final Report
 
 - Scenario: 5
 
 - Test: 42
 
-- Assert: 207
+- Assert: 208
 

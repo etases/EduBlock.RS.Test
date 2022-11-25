@@ -1,6 +1,7 @@
 package me.hsgamer.edublock.rs.test.scenario;
 
 import me.hsgamer.edublock.rs.test.JsonUtil;
+import me.hsgamer.edublock.rs.test.Report;
 import me.hsgamer.edublock.rs.test.SimpleAssert;
 import me.hsgamer.edublock.rs.test.UrlSupplier;
 import me.hsgamer.edublock.rs.test.annotation.Test;
@@ -35,6 +36,7 @@ public class SubjectScenario extends AnnotatedScenario {
 
     @Test
     private void getSubjectById() throws IOException, InterruptedException {
+        Report.addLabel("Found", 3);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/subject/1"))
                 .headers("Content-Type", "application/json")
@@ -48,7 +50,7 @@ public class SubjectScenario extends AnnotatedScenario {
         SimpleAssert.assertNotNull(subjectResponse.getData());
         SimpleAssert.assertEquals(1L, subjectResponse.getData().getId());
 
-
+        Report.addLabel("Not Found", 3);
         HttpRequest notFoundRequest = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/subject/0"))
                 .headers("Content-Type", "application/json")

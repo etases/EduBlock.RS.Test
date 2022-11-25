@@ -1,6 +1,7 @@
 package me.hsgamer.edublock.rs.test.scenario;
 
 import me.hsgamer.edublock.rs.test.JsonUtil;
+import me.hsgamer.edublock.rs.test.Report;
 import me.hsgamer.edublock.rs.test.SimpleAssert;
 import me.hsgamer.edublock.rs.test.UrlSupplier;
 import me.hsgamer.edublock.rs.test.annotation.Test;
@@ -185,24 +186,30 @@ public class AccountScenario extends AnnotatedScenario {
                 .GET()
                 .build();
 
+        Report.addLabel("Admin", 3);
         HttpResponse<String> adminResponse = httpClient.send(adminRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> staffResponse = httpClient.send(staffRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> teacherResponse = httpClient.send(teacherRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> studentResponse = httpClient.send(studentRequest, HttpResponse.BodyHandlers.ofString());
-
         SimpleAssert.assertEquals(200, adminResponse.statusCode());
-        SimpleAssert.assertEquals(401, staffResponse.statusCode());
-        SimpleAssert.assertEquals(401, teacherResponse.statusCode());
-        SimpleAssert.assertEquals(401, studentResponse.statusCode());
-
         SimpleAssert.assertEquals("Hello Admin", adminResponse.body());
+
+        Report.addLabel("Staff", 3);
+        HttpResponse<String> staffResponse = httpClient.send(staffRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(401, staffResponse.statusCode());
         SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(staffResponse.body(), Response.class).getStatus());
+
+        Report.addLabel("Teacher", 3);
+        HttpResponse<String> teacherResponse = httpClient.send(teacherRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(401, teacherResponse.statusCode());
         SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(teacherResponse.body(), Response.class).getStatus());
+
+        Report.addLabel("Student", 3);
+        HttpResponse<String> studentResponse = httpClient.send(studentRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(401, studentResponse.statusCode());
         SimpleAssert.assertEquals(-1990, JsonUtil.fromJson(studentResponse.body(), Response.class).getStatus());
     }
 
     @Test(order = 3)
     private void getOwnAccount() throws IOException, InterruptedException {
+        Report.addLabel("Admin", 3);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account"))
                 .headers("Content-Type", "application/json")
@@ -218,6 +225,7 @@ public class AccountScenario extends AnnotatedScenario {
         SimpleAssert.assertNotNull(accountWithProfileResponse.getData());
         SimpleAssert.assertEquals("TienH", accountWithProfileResponse.getData().getAccount().getUsername());
 
+        Report.addLabel("Staff", 3);
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account"))
                 .headers("Content-Type", "application/json")
@@ -236,6 +244,7 @@ public class AccountScenario extends AnnotatedScenario {
 
     @Test(order = 4)
     private void getAccount() throws IOException, InterruptedException {
+        Report.addLabel("Admin", 3);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/1"))
                 .headers("Content-Type", "application/json")
@@ -251,6 +260,7 @@ public class AccountScenario extends AnnotatedScenario {
         SimpleAssert.assertNotNull(accountWithProfileResponse.getData());
         SimpleAssert.assertEquals("TienH", accountWithProfileResponse.getData().getAccount().getUsername());
 
+        Report.addLabel("Staff", 3);
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/2"))
                 .headers("Content-Type", "application/json")
@@ -266,6 +276,7 @@ public class AccountScenario extends AnnotatedScenario {
         SimpleAssert.assertNotNull(accountWithProfileResponse2.getData());
         SimpleAssert.assertEquals("TuL", accountWithProfileResponse2.getData().getAccount().getUsername());
 
+        Report.addLabel("Teacher", 3);
         HttpRequest request3 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/100"))
                 .headers("Content-Type", "application/json")
@@ -306,6 +317,7 @@ public class AccountScenario extends AnnotatedScenario {
 
     @Test(order = 5)
     private void getPagedAllAccount() throws IOException, InterruptedException {
+        Report.addLabel("Page 1", 3);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/list", Map.of("pageNumber", "1", "pageSize", "2")))
                 .headers("Content-Type", "application/json")
@@ -323,6 +335,7 @@ public class AccountScenario extends AnnotatedScenario {
         SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"));
         SimpleAssert.assertAnyMatch(accountWithProfileListResponse.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
 
+        Report.addLabel("Page 2", 3);
         HttpRequest request2 = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/list", Map.of("pageNumber", "2", "pageSize", "2")))
                 .headers("Content-Type", "application/json")
@@ -368,35 +381,37 @@ public class AccountScenario extends AnnotatedScenario {
                 .GET()
                 .build();
 
+        Report.addLabel("Admin", 3);
         HttpResponse<String> adminResponse = httpClient.send(adminRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> teacherResponse = httpClient.send(teacherRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> studentResponse = httpClient.send(studentRequest, HttpResponse.BodyHandlers.ofString());
-        HttpResponse<String> staffResponse = httpClient.send(staffRequest, HttpResponse.BodyHandlers.ofString());
-
         SimpleAssert.assertTrue(adminResponse.statusCode() == 200);
-        SimpleAssert.assertTrue(teacherResponse.statusCode() == 200);
-        SimpleAssert.assertTrue(studentResponse.statusCode() == 200);
-        SimpleAssert.assertTrue(staffResponse.statusCode() == 200);
-
         AccountWithProfileListResponse adminResponseData = JsonUtil.fromJson(adminResponse.body(), AccountWithProfileListResponse.class);
-        AccountWithProfileListResponse teacherResponseData = JsonUtil.fromJson(teacherResponse.body(), AccountWithProfileListResponse.class);
-        AccountWithStudentProfileListResponse studentResponseData = JsonUtil.fromJson(studentResponse.body(), AccountWithStudentProfileListResponse.class);
-        AccountWithProfileListResponse staffResponseData = JsonUtil.fromJson(staffResponse.body(), AccountWithProfileListResponse.class);
-
         SimpleAssert.assertNotNull(adminResponseData.getData());
-        SimpleAssert.assertNotNull(teacherResponseData.getData());
-        SimpleAssert.assertNotNull(studentResponseData.getData());
-        SimpleAssert.assertNotNull(staffResponseData.getData());
-
         SimpleAssert.assertEquals(1, adminResponseData.getData().size());
-        SimpleAssert.assertEquals(1, teacherResponseData.getData().size());
-        SimpleAssert.assertEquals(1, studentResponseData.getData().size());
-        SimpleAssert.assertEquals(1, staffResponseData.getData().size());
-
         SimpleAssert.assertAnyMatch(adminResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TienH"));
-        SimpleAssert.assertAnyMatch(staffResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
+
+        Report.addLabel("Teacher", 3);
+        HttpResponse<String> teacherResponse = httpClient.send(teacherRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertTrue(teacherResponse.statusCode() == 200);
+        AccountWithProfileListResponse teacherResponseData = JsonUtil.fromJson(teacherResponse.body(), AccountWithProfileListResponse.class);
+        SimpleAssert.assertNotNull(teacherResponseData.getData());
+        SimpleAssert.assertEquals(1, teacherResponseData.getData().size());
         SimpleAssert.assertAnyMatch(teacherResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("DaQ"));
+
+        Report.addLabel("Student", 3);
+        HttpResponse<String> studentResponse = httpClient.send(studentRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertTrue(studentResponse.statusCode() == 200);
+        AccountWithStudentProfileListResponse studentResponseData = JsonUtil.fromJson(studentResponse.body(), AccountWithStudentProfileListResponse.class);
+        SimpleAssert.assertNotNull(studentResponseData.getData());
+        SimpleAssert.assertEquals(1, studentResponseData.getData().size());
         SimpleAssert.assertAnyMatch(studentResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("UyCHA"));
+
+        Report.addLabel("Staff", 3);
+        HttpResponse<String> staffResponse = httpClient.send(staffRequest, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertTrue(staffResponse.statusCode() == 200);
+        AccountWithProfileListResponse staffResponseData = JsonUtil.fromJson(staffResponse.body(), AccountWithProfileListResponse.class);
+        SimpleAssert.assertNotNull(staffResponseData.getData());
+        SimpleAssert.assertEquals(1, staffResponseData.getData().size());
+        SimpleAssert.assertAnyMatch(staffResponseData.getData(), accountWithProfile -> accountWithProfile.getAccount().getUsername().equals("TuL"));
     }
 
     @Test(order = 7)
@@ -517,6 +532,7 @@ public class AccountScenario extends AnnotatedScenario {
 
     @Test(order = 10)
     private void updateStudentProfile() throws IOException, InterruptedException {
+        Report.addLabel("Valid", 3);
         StudentUpdate studentUpdate = new StudentUpdate(
                 "Kinh",
                 "Nguyen Van A",
@@ -559,6 +575,7 @@ public class AccountScenario extends AnnotatedScenario {
         SimpleAssert.assertEquals("Ki su", accountWithStudentProfileResponse.getData().getStudent().getGuardianJob());
         SimpleAssert.assertEquals("Can Tho", accountWithStudentProfileResponse.getData().getStudent().getHomeTown());
 
+        Report.addLabel("Invalid", 3);
         HttpRequest invalidRequest = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/account/3/student"))
                 .headers("Content-Type", "application/json")

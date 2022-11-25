@@ -1,9 +1,6 @@
 package me.hsgamer.edublock.rs.test.scenario;
 
-import me.hsgamer.edublock.rs.test.JsonUtil;
-import me.hsgamer.edublock.rs.test.Main;
-import me.hsgamer.edublock.rs.test.SimpleAssert;
-import me.hsgamer.edublock.rs.test.UrlSupplier;
+import me.hsgamer.edublock.rs.test.*;
 import me.hsgamer.edublock.rs.test.annotation.Test;
 import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryInput;
 import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryListInput;
@@ -39,6 +36,7 @@ public class RecordScenario extends AnnotatedScenario {
 
     @Test
     private void requestChange() throws IOException, InterruptedException {
+        Report.addLabel("Request 1", 3);
         PendingRecordEntryInput pendingRecordEntryInput = new PendingRecordEntryInput(
                 4,
                 1,
@@ -57,7 +55,7 @@ public class RecordScenario extends AnnotatedScenario {
         var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         SimpleAssert.assertEquals(200, response.statusCode());
 
-
+        Report.addLabel("Request 2", 3);
         PendingRecordEntryInput pendingRecordEntryInput2 = new PendingRecordEntryInput(
                 4,
                 1,
@@ -79,6 +77,7 @@ public class RecordScenario extends AnnotatedScenario {
 
     @Test
     private void bulkRequest() throws IOException, InterruptedException {
+        Report.addLabel("Valid Request", 3);
         PendingRecordEntryListInput pendingRecordEntryListInput = new PendingRecordEntryListInput(List.of(
                 new PendingRecordEntryInput(
                         4,
@@ -107,6 +106,36 @@ public class RecordScenario extends AnnotatedScenario {
 
         var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         SimpleAssert.assertEquals(200, response.statusCode());
+
+        Report.addLabel("Invalid Request", 3);
+        PendingRecordEntryListInput pendingRecordEntryListInput2 = new PendingRecordEntryListInput(List.of(
+                new PendingRecordEntryInput(
+                        1,
+                        1,
+                        1,
+                        2,
+                        3,
+                        1
+                ),
+                new PendingRecordEntryInput(
+                        4,
+                        1,
+                        5,
+                        6,
+                        7,
+                        1
+                )
+        ));
+
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/record/request/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + studentToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(pendingRecordEntryListInput2)))
+                .build();
+
+        var response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(400, response2.statusCode());
     }
 
     @Test(order = 1)
@@ -209,6 +238,7 @@ public class RecordScenario extends AnnotatedScenario {
 
     @Test(order = 2)
     private void verifyRequest() throws IOException, InterruptedException {
+        Report.addLabel("Deny request", 3);
         PendingRecordEntryVerify verify = new PendingRecordEntryVerify(
                 1,
                 false
@@ -223,6 +253,7 @@ public class RecordScenario extends AnnotatedScenario {
         var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         SimpleAssert.assertEquals(200, response.statusCode());
 
+        Report.addLabel("Accept request", 3);
         PendingRecordEntryVerify verify2 = new PendingRecordEntryVerify(
                 2,
                 true
