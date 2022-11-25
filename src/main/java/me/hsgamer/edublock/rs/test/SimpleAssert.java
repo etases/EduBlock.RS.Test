@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 @UtilityClass
 public class SimpleAssert {
     private static void addAssertDetail(String name, String expected, String actual) {
-        Report.addDetail("**" + name + "** expected: `" + expected + "`, actual: `" + actual + "`");
+        Report.addDetail("**" + name + "**", "Expected: `" + expected + "`", "Actual: `" + actual + "`");
     }
 
     public static void assertTrue(boolean condition, String failMessage, Object... args) {

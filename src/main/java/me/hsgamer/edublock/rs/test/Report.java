@@ -18,14 +18,23 @@ public class Report {
 
     public static void addLine(String line) {
         lines.add(line);
+        lines.add("");
     }
 
     public static void addLabel(String label, int level) {
         addLine("#".repeat(Math.max(0, level)) + " " + label);
     }
 
+    public static void addDetail(String... details) {
+        addLine("- " + details[0]);
+        for (int i = 1; i < details.length; i++) {
+            addLine("  " + details[i]);
+        }
+    }
+
     public static void addDetail(String detail) {
-        addLine("* " + detail);
+        String[] split = detail.split("\n");
+        addDetail(split);
     }
 
     public static List<String> getLines() {
