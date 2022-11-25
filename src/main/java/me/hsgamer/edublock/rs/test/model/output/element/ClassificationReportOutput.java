@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class ClassificationReportOutput {
     ClassificationOutput firstHalfClassify = new ClassificationOutput();
     ClassificationOutput secondHalfClassify = new ClassificationOutput();

@@ -10,6 +10,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class PaginationInfo {
     int totalPages;
     int totalEntries;

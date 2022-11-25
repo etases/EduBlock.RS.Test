@@ -3,6 +3,7 @@ package me.hsgamer.edublock.rs.test;
 import me.hsgamer.edublock.rs.test.scenario.*;
 import org.tinylog.Logger;
 
+import java.io.File;
 import java.net.http.HttpClient;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,14 @@ public class Main {
         Logger.info("Scenario: {}", Counter.getScenarioCounter());
         Logger.info("Test: {}", Counter.getTestCounter());
         Logger.info("Assert: {}", Counter.getAssertCounter());
+
+        Report.addLabel("Final Report", 1);
+        Report.addDetail("Scenario: " + Counter.getScenarioCounter());
+        Report.addDetail("Test: " + Counter.getTestCounter());
+        Report.addDetail("Assert: " + Counter.getAssertCounter());
+
+        File reportFile = new File("report.md");
+        Report.write(reportFile);
     }
 
     public static <T extends AbstractScenario> T getScenario(Class<T> clazz) {
@@ -51,6 +60,7 @@ public class Main {
         Counter.incrementScenarioCounter();
         try {
             Logger.info("[RUNNING] " + scenario.getClass().getSimpleName());
+            Report.addLabel(scenario.getClass().getSimpleName(), 1);
             scenario.before();
             scenario.run();
             scenario.after();

@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class RecordWithStudentOutput {
     ClassroomOutput classroom = new ClassroomOutput();
     List<RecordEntryOutput> entries = Collections.emptyList();

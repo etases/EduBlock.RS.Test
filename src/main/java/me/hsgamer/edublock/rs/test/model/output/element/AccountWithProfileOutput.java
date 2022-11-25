@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class AccountWithProfileOutput {
     AccountOutput account = new AccountOutput();
     ProfileOutput profile = new ProfileOutput();

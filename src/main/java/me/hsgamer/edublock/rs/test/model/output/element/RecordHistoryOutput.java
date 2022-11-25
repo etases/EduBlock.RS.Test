@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class RecordHistoryOutput {
     Date timestamp = Date.from(Instant.EPOCH);
     List<RecordOutput> record = Collections.emptyList();

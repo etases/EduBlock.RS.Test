@@ -11,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class RecordEntryOutput {
     long subjectId = 0;
     SubjectOutput subject = new SubjectOutput();
