@@ -6,6 +6,7 @@ import me.hsgamer.edublock.rs.test.SimpleAssert;
 import me.hsgamer.edublock.rs.test.UrlSupplier;
 import me.hsgamer.edublock.rs.test.annotation.Test;
 import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryInput;
+import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryListInput;
 import me.hsgamer.edublock.rs.test.model.input.PendingRecordEntryVerify;
 import me.hsgamer.edublock.rs.test.model.output.PendingRecordEntryListResponse;
 import me.hsgamer.edublock.rs.test.model.output.RecordResponse;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class RecordScenario extends AnnotatedScenario {
     String adminToken;
@@ -75,6 +77,38 @@ public class RecordScenario extends AnnotatedScenario {
         SimpleAssert.assertEquals(200, response2.statusCode());
     }
 
+    @Test
+    private void bulkRequest() throws IOException, InterruptedException {
+        PendingRecordEntryListInput pendingRecordEntryListInput = new PendingRecordEntryListInput(List.of(
+                new PendingRecordEntryInput(
+                        4,
+                        1,
+                        1,
+                        2,
+                        3,
+                        1
+                ),
+                new PendingRecordEntryInput(
+                        4,
+                        1,
+                        5,
+                        6,
+                        7,
+                        1
+                )
+        ));
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/record/request/list"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + teacherToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(pendingRecordEntryListInput)))
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+    }
+
     @Test(order = 1)
     private void getPendingRecordEntries() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
@@ -89,7 +123,7 @@ public class RecordScenario extends AnnotatedScenario {
 
         PendingRecordEntryListResponse pendingRecordEntryListResponse = JsonUtil.fromJson(response.body(), PendingRecordEntryListResponse.class);
         SimpleAssert.assertNotNull(pendingRecordEntryListResponse.getData());
-        SimpleAssert.assertEquals(2, pendingRecordEntryListResponse.getData().size());
+        SimpleAssert.assertEquals(4, pendingRecordEntryListResponse.getData().size());
         SimpleAssert.assertAnyMatch(pendingRecordEntryListResponse.getData(), pendingRecordEntry ->
                 pendingRecordEntry.getStudent().getAccount().getId() == 4
                         && pendingRecordEntry.getClassroom().getId() == 1
@@ -105,6 +139,22 @@ public class RecordScenario extends AnnotatedScenario {
                         && pendingRecordEntry.getFirstHalfScore() == 10
                         && pendingRecordEntry.getSecondHalfScore() == 10
                         && pendingRecordEntry.getFinalScore() == 10
+        );
+        SimpleAssert.assertAnyMatch(pendingRecordEntryListResponse.getData(), pendingRecordEntry ->
+                pendingRecordEntry.getStudent().getAccount().getId() == 4
+                        && pendingRecordEntry.getClassroom().getId() == 1
+                        && pendingRecordEntry.getSubject().getId() == 1
+                        && pendingRecordEntry.getFirstHalfScore() == 1
+                        && pendingRecordEntry.getSecondHalfScore() == 2
+                        && pendingRecordEntry.getFinalScore() == 3
+        );
+        SimpleAssert.assertAnyMatch(pendingRecordEntryListResponse.getData(), pendingRecordEntry ->
+                pendingRecordEntry.getStudent().getAccount().getId() == 4
+                        && pendingRecordEntry.getClassroom().getId() == 1
+                        && pendingRecordEntry.getSubject().getId() == 1
+                        && pendingRecordEntry.getFirstHalfScore() == 5
+                        && pendingRecordEntry.getSecondHalfScore() == 6
+                        && pendingRecordEntry.getFinalScore() == 7
         );
     }
 
@@ -122,7 +172,7 @@ public class RecordScenario extends AnnotatedScenario {
 
         PendingRecordEntryListResponse pendingRecordEntryListResponse = JsonUtil.fromJson(response.body(), PendingRecordEntryListResponse.class);
         SimpleAssert.assertNotNull(pendingRecordEntryListResponse.getData());
-        SimpleAssert.assertEquals(2, pendingRecordEntryListResponse.getData().size());
+        SimpleAssert.assertEquals(4, pendingRecordEntryListResponse.getData().size());
         SimpleAssert.assertAnyMatch(pendingRecordEntryListResponse.getData(), pendingRecordEntry ->
                 pendingRecordEntry.getStudent().getAccount().getId() == 4
                         && pendingRecordEntry.getClassroom().getId() == 1
@@ -138,6 +188,22 @@ public class RecordScenario extends AnnotatedScenario {
                         && pendingRecordEntry.getFirstHalfScore() == 10
                         && pendingRecordEntry.getSecondHalfScore() == 10
                         && pendingRecordEntry.getFinalScore() == 10
+        );
+        SimpleAssert.assertAnyMatch(pendingRecordEntryListResponse.getData(), pendingRecordEntry ->
+                pendingRecordEntry.getStudent().getAccount().getId() == 4
+                        && pendingRecordEntry.getClassroom().getId() == 1
+                        && pendingRecordEntry.getSubject().getId() == 1
+                        && pendingRecordEntry.getFirstHalfScore() == 1
+                        && pendingRecordEntry.getSecondHalfScore() == 2
+                        && pendingRecordEntry.getFinalScore() == 3
+        );
+        SimpleAssert.assertAnyMatch(pendingRecordEntryListResponse.getData(), pendingRecordEntry ->
+                pendingRecordEntry.getStudent().getAccount().getId() == 4
+                        && pendingRecordEntry.getClassroom().getId() == 1
+                        && pendingRecordEntry.getSubject().getId() == 1
+                        && pendingRecordEntry.getFirstHalfScore() == 5
+                        && pendingRecordEntry.getSecondHalfScore() == 6
+                        && pendingRecordEntry.getFinalScore() == 7
         );
     }
 
