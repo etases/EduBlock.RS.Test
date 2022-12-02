@@ -1,15 +1,9 @@
 package me.hsgamer.edublock.rs.test.scenario;
 
-import me.hsgamer.edublock.rs.test.JsonUtil;
-import me.hsgamer.edublock.rs.test.Main;
-import me.hsgamer.edublock.rs.test.SimpleAssert;
-import me.hsgamer.edublock.rs.test.UrlSupplier;
+import me.hsgamer.edublock.rs.test.*;
 import me.hsgamer.edublock.rs.test.annotation.Test;
 import me.hsgamer.edublock.rs.test.model.input.*;
-import me.hsgamer.edublock.rs.test.model.output.AccountWithStudentProfileListResponse;
-import me.hsgamer.edublock.rs.test.model.output.ClassroomListResponse;
-import me.hsgamer.edublock.rs.test.model.output.ClassroomResponse;
-import me.hsgamer.edublock.rs.test.model.output.TeacherWithSubjectListResponse;
+import me.hsgamer.edublock.rs.test.model.output.*;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
@@ -61,10 +55,35 @@ public class ClassroomScenario extends AnnotatedScenario {
         SimpleAssert.assertEquals(classCreate.getGrade(), classroomResponse.getData().getGrade());
         SimpleAssert.assertEquals(classCreate.getYear(), classroomResponse.getData().getYear());
         SimpleAssert.assertEquals(classCreate.getHomeroomTeacherId(), classroomResponse.getData().getHomeroomTeacher().getAccount().getId());
+
+        ClassCreate classCreate2 = new ClassCreate(
+                "10A3",
+                10,
+                2020,
+                3
+        );
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/classroom"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(classCreate2)))
+                .build();
+
+        var response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response2.statusCode());
+
+        ClassroomResponse classroomResponse2 = JsonUtil.fromJson(response2.body(), ClassroomResponse.class);
+        SimpleAssert.assertNotNull(classroomResponse2.getData());
+        SimpleAssert.assertEquals(2L, classroomResponse2.getData().getId());
+        SimpleAssert.assertEquals(classCreate2.getName(), classroomResponse2.getData().getName());
+        SimpleAssert.assertEquals(classCreate2.getGrade(), classroomResponse2.getData().getGrade());
+        SimpleAssert.assertEquals(classCreate2.getYear(), classroomResponse2.getData().getYear());
+        SimpleAssert.assertEquals(classCreate2.getHomeroomTeacherId(), classroomResponse2.getData().getHomeroomTeacher().getAccount().getId());
     }
 
     @Test(order = 1)
     private void addStudentToClassroom() throws IOException, InterruptedException {
+        Report.addLabel("Success", 3);
         AccountListInput accountListInput = new AccountListInput(List.of(4L));
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/classroom/1/student"))
@@ -75,6 +94,40 @@ public class ClassroomScenario extends AnnotatedScenario {
 
         var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         SimpleAssert.assertEquals(200, response.statusCode());
+
+        Report.addLabel("Same class", 3);
+        AccountListInput accountListInput2 = new AccountListInput(List.of(4L));
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/classroom/1/student"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(accountListInput2)))
+                .build();
+
+        var response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(400, response2.statusCode());
+        AccountErrorListResponse accountErrorListResponse = JsonUtil.fromJson(response2.body(), AccountErrorListResponse.class);
+        SimpleAssert.assertNotNull(accountErrorListResponse.getData());
+        SimpleAssert.assertEquals(1, accountErrorListResponse.getData().size());
+        SimpleAssert.assertEquals(4L, accountErrorListResponse.getData().get(0).getData());
+        SimpleAssert.assertEquals(2, accountErrorListResponse.getData().get(0).getStatus());
+
+        Report.addLabel("Same year", 3);
+        AccountListInput accountListInput3 = new AccountListInput(List.of(4L));
+        HttpRequest request3 = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/classroom/2/student"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(accountListInput3)))
+                .build();
+
+        var response3 = httpClient.send(request3, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(400, response3.statusCode());
+        AccountErrorListResponse accountErrorListResponse2 = JsonUtil.fromJson(response3.body(), AccountErrorListResponse.class);
+        SimpleAssert.assertNotNull(accountErrorListResponse2.getData());
+        SimpleAssert.assertEquals(1, accountErrorListResponse2.getData().size());
+        SimpleAssert.assertEquals(4L, accountErrorListResponse2.getData().get(0).getData());
+        SimpleAssert.assertEquals(3, accountErrorListResponse2.getData().get(0).getStatus());
     }
 
     @Test(order = 1)
@@ -173,7 +226,7 @@ public class ClassroomScenario extends AnnotatedScenario {
 
         ClassroomListResponse classroomListResponse = JsonUtil.fromJson(response.body(), ClassroomListResponse.class);
         SimpleAssert.assertNotNull(classroomListResponse.getData());
-        SimpleAssert.assertEquals(1, classroomListResponse.getData().size());
+        SimpleAssert.assertEquals(2, classroomListResponse.getData().size());
         SimpleAssert.assertAnyMatch(classroomListResponse.getData(), classroom -> classroom.getId() == 1L);
     }
 
@@ -227,7 +280,7 @@ public class ClassroomScenario extends AnnotatedScenario {
 
         ClassroomListResponse classroomListResponse = JsonUtil.fromJson(response.body(), ClassroomListResponse.class);
         SimpleAssert.assertNotNull(classroomListResponse.getData());
-        SimpleAssert.assertEquals(1, classroomListResponse.getData().size());
+        SimpleAssert.assertEquals(2, classroomListResponse.getData().size());
         SimpleAssert.assertAnyMatch(classroomListResponse.getData(), classroom -> classroom.getId() == 1L);
     }
 
