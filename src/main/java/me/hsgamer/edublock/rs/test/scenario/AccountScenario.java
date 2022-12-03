@@ -443,6 +443,35 @@ public class AccountScenario extends AnnotatedScenario {
         adminToken = stringResponse.getData();
     }
 
+    @Test(order = 7)
+    private void changeOwnPassword() throws IOException, InterruptedException {
+        UpdatePasswordInput updatePasswordInput = new UpdatePasswordInput("password", "123456");
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/account/password"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .PUT(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(updatePasswordInput)))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        AccountLogin accountLogin = new AccountLogin("TuL", "123456");
+        HttpRequest loginRequest = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/login"))
+                .headers("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(accountLogin)))
+                .build();
+
+        HttpResponse<String> loginResponse = httpClient.send(loginRequest, HttpResponse.BodyHandlers.ofString());
+
+        SimpleAssert.assertEquals(200, loginResponse.statusCode());
+        StringResponse stringResponse = JsonUtil.fromJson(loginResponse.body(), StringResponse.class);
+        SimpleAssert.assertNotNull(stringResponse.getData());
+        staffToken = stringResponse.getData();
+    }
+
     @Test(order = 8)
     private void changeSelfProfile() throws IOException, InterruptedException {
         ProfileUpdate profileUpdate = new ProfileUpdate(
