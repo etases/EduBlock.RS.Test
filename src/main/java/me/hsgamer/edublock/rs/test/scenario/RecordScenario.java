@@ -138,6 +138,47 @@ public class RecordScenario extends AnnotatedScenario {
         SimpleAssert.assertEquals(400, response2.statusCode());
     }
 
+    @Test
+    private void updateStudentRecordEntry() throws IOException, InterruptedException {
+        Report.addLabel("Valid Request", 3);
+        PendingRecordEntryInput pendingRecordEntryInput = new PendingRecordEntryInput(
+                4,
+                1,
+                5,
+                5,
+                5,
+                1
+        );
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/record/entry"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + teacherToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(pendingRecordEntryInput)))
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        Report.addLabel("Invalid Request", 3);
+        PendingRecordEntryInput pendingRecordEntryInput2 = new PendingRecordEntryInput(
+                1,
+                1,
+                5,
+                5,
+                5,
+                1
+        );
+        HttpRequest request2 = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/record/entry"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + teacherToken)
+                .POST(HttpRequest.BodyPublishers.ofString(JsonUtil.toJson(pendingRecordEntryInput2)))
+                .build();
+
+        var response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(404, response2.statusCode());
+    }
+
     @Test(order = 1)
     private void getPendingRecordEntries() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
@@ -283,7 +324,7 @@ public class RecordScenario extends AnnotatedScenario {
 
         RecordResponse recordResponse = JsonUtil.fromJson(response.body(), RecordResponse.class);
         SimpleAssert.assertNotNull(recordResponse.getData());
-        SimpleAssert.assertEquals(1, recordResponse.getData().getEntries().size());
+        SimpleAssert.assertEquals(2, recordResponse.getData().getEntries().size());
         SimpleAssert.assertAnyMatch(recordResponse.getData().getEntries(), recordEntry ->
                 recordEntry.getSubject().getId() == 1
                         && recordEntry.getFirstHalfScore() == 10
@@ -306,7 +347,7 @@ public class RecordScenario extends AnnotatedScenario {
 
         RecordResponse recordResponse = JsonUtil.fromJson(response.body(), RecordResponse.class);
         SimpleAssert.assertNotNull(recordResponse.getData());
-        SimpleAssert.assertEquals(1, recordResponse.getData().getEntries().size());
+        SimpleAssert.assertEquals(2, recordResponse.getData().getEntries().size());
         SimpleAssert.assertAnyMatch(recordResponse.getData().getEntries(), recordEntry ->
                 recordEntry.getSubject().getId() == 1
                         && recordEntry.getFirstHalfScore() == 10
@@ -331,7 +372,7 @@ public class RecordScenario extends AnnotatedScenario {
         SimpleAssert.assertNotNull(recordListResponse.getData());
         SimpleAssert.assertEquals(1, recordListResponse.getData().size());
         SimpleAssert.assertAnyMatch(recordListResponse.getData(), record ->
-                record.getStudent().getAccount().getId() == 4 && record.getEntries().size() == 1
+                record.getStudent().getAccount().getId() == 4 && record.getEntries().size() == 2
         );
     }
 
@@ -351,7 +392,7 @@ public class RecordScenario extends AnnotatedScenario {
         SimpleAssert.assertNotNull(recordListResponse.getData());
         SimpleAssert.assertEquals(1, recordListResponse.getData().size());
         SimpleAssert.assertAnyMatch(recordListResponse.getData(), record ->
-                record.getStudent().getAccount().getId() == 4 && record.getEntries().size() == 1
+                record.getStudent().getAccount().getId() == 4 && record.getEntries().size() == 2
         );
     }
 }
