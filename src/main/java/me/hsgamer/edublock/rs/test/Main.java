@@ -17,7 +17,8 @@ public class Main {
             ClassroomScenario::new,
             RecordScenario::new,
             SubjectScenario::new,
-            ClassificationScenario::new
+            ClassificationScenario::new,
+            UpdaterScenario::new
     );
 
     public static void main(String[] args) {
