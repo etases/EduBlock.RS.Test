@@ -331,6 +331,12 @@ public class RecordScenario extends AnnotatedScenario {
                         && recordEntry.getSecondHalfScore() == 10
                         && recordEntry.getFinalScore() == 10
         );
+        SimpleAssert.assertAnyMatch(recordResponse.getData().getEntries(), recordEntry ->
+                recordEntry.getSubject().getId() == 1
+                        && recordEntry.getFirstHalfScore() == 5
+                        && recordEntry.getSecondHalfScore() == 5
+                        && recordEntry.getFinalScore() == 5
+        );
     }
 
     @Test(order = 3)
@@ -353,6 +359,12 @@ public class RecordScenario extends AnnotatedScenario {
                         && recordEntry.getFirstHalfScore() == 10
                         && recordEntry.getSecondHalfScore() == 10
                         && recordEntry.getFinalScore() == 10
+        );
+        SimpleAssert.assertAnyMatch(recordResponse.getData().getEntries(), recordEntry ->
+                recordEntry.getSubject().getId() == 1
+                        && recordEntry.getFirstHalfScore() == 5
+                        && recordEntry.getSecondHalfScore() == 5
+                        && recordEntry.getFinalScore() == 5
         );
     }
 
