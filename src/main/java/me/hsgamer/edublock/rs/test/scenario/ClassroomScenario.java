@@ -267,6 +267,24 @@ public class ClassroomScenario extends AnnotatedScenario {
     }
 
     @Test(order = 4)
+    private void getClassroomListFromStudent() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(urlSupplier.getUri("/classroom/student/4"))
+                .headers("Content-Type", "application/json")
+                .headers("Authorization", "Bearer " + staffToken)
+                .GET()
+                .build();
+
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        SimpleAssert.assertEquals(200, response.statusCode());
+
+        ClassroomListResponse classroomListResponse = JsonUtil.fromJson(response.body(), ClassroomListResponse.class);
+        SimpleAssert.assertNotNull(classroomListResponse.getData());
+        SimpleAssert.assertEquals(1, classroomListResponse.getData().size());
+        SimpleAssert.assertAnyMatch(classroomListResponse.getData(), classroom -> classroom.getId() == 1L);
+    }
+
+    @Test(order = 4)
     private void getClassroomListAsHomeroom() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(urlSupplier.getUri("/classroom/homeroom"))
